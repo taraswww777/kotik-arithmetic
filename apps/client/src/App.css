@@ -1,0 +1,35 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+}
+
+.content {
+  padding: 20px;
+}
+
+.crossword-section {
+  text-align: center;
+}
+
+.crossword-grid {
+  margin: 20px auto;
+}
+
+.mascot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+@media (max-width: 600px) {
+  .app h1 {
+    font-size: 24px;
+  }
+  
+  .crossword-grid {
+    gap: 4px;
+  }
+}

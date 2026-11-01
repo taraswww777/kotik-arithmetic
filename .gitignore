@@ -1,24 +1,53 @@
-### Example user template template
-### Example user template
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
 
-# IntelliJ project files
-.idea
-*.iml
-out
-gen
-### react template
-.DS_*
+# Build output
+dist/
+build/
+*.js
+
+# Environment files (не git-ignored, если настроено)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+._*
+
+# Logs
+logs/
 *.log
-logs
-**/*.backup.*
-**/*.back.*
 
-node_modules
-bower_components
+# Prisma
+.prisma
 
-*.sublime*
+# Testing coverage
+coverage/
 
-psd
-thumb
-sketch
+# Temporary files
+tmp/
+temp/
 
+# Test output
+.nyc_output/
+
+# Misc
+*.orig
+.yarn/cache
+.yarn/unplugged
+
+# PWA assets (не коммитим в репозиторий)
+apple-touch-icon.png
+favicon.ico
+vite.svg
