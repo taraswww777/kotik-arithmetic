@@ -4,6 +4,7 @@ import theme from './theme/theme';
 import Mascot from './components/mascot/Mascot';
 import { CrosswordGame, type Example } from './components/CrosswordGame';
 import { defaultSettings } from 'shared-config';
+import { getAggregatedStats } from './services/storage';
 
 export default function App() {
   // Состояние настроек игры (можно сделать из sessionStorage)
@@ -16,14 +17,16 @@ export default function App() {
 
   const [examples, setExamples] = useState<Example[]>([]);
 
-  // Обработка сохранения результата в историю (можно использовать localStorage)
-  const onSaveResult = (stats: any) => {
+  // Обработка сохранения результата
+  const onSaveResult = async (stats: any, crosswordId?: string) => {
     console.log('Game result saved:', stats);
-    // Здесь можно добавить сохранение в IndexedDB или localStorage
-    if (typeof window !== 'undefined') {
-      const history = JSON.parse(localStorage.getItem('kotik-game-history') || '[]');
-      history.push(stats);
-      localStorage.setItem('kotik-game-history', JSON.stringify(history));
+
+    // Агрегированная статистика из IndexedDB
+    try {
+      const aggregated = await getAggregatedStats();
+      console.log('Aggregated stats:', aggregated);
+    } catch (e) {
+      console.warn('Не удалось получить агрегированную статистику:', e);
     }
   };
 

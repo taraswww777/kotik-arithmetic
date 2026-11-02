@@ -9,6 +9,7 @@ import { OperatorsDisplaySettings } from './settings/OperatorsDisplaySettings';
 import { generateExamples, Grid, Example, Cell } from 'shared-crossword-generator';
 import { validateCellInput, checkCrosswordCompletion } from '../utils/validation';
 import type { GameStats } from './results/ResultsScreen';
+import { saveGameResult } from '../services/storage';
 
 // Типы состояния игры
 type GameState = 'playing' | 'finished';
@@ -22,7 +23,7 @@ export interface CrosswordGameProps {
   };
   examples: Example[];
   setExamples: (examples: Example[]) => void;
-  onSaveResult?: (stats: GameStats) => void;
+  onSaveResult?: (stats: GameStats, crosswordId: string) => void;
 }
 
 // Контейнер игры
@@ -126,6 +127,9 @@ export const CrosswordGame = ({
     // Сбор статистики перед завершением
     const result = checkCrosswordCompletion(grid, userInput);
     
+    // Генерация UUID для crosswordId
+    const crosswordId = `crossword-${Date.now()}`;
+
     const stats: GameStats = {
       solvedCount: result.correctCount || 0,
       totalSolved: examples.length,
@@ -134,7 +138,10 @@ export const CrosswordGame = ({
       difficultyLevel: 'basic',
     };
 
-    onSaveResult?.(stats);
+    // Сохранение в IndexedDB/LocalStorage
+    saveGameResult(stats, crosswordId);
+    
+    onSaveResult?.(stats, crosswordId);
     setGameState('finished');
     
     // Показываем экран результатов (можно добавить отдельный компонент)
