@@ -1,4 +1,7 @@
 // Экспорт типов и констант кроссвордов
-export { default as difficultyLevels } from './config/difficulty';
-export { default as operationSets, type Operation } from './config/operations';
-export { default as defaultSettings, type Settings } from './config/settings';
+export * from './config/difficulty';
+export * from './config/operations';
+export * from './config/settings';
+
+// Генератор примеров кроссворда
+export * from './crossword-generator';
