@@ -2,3 +2,4 @@
 export * from './difficulty';
 export * from './operations';
 export * from './settings';
+export * from './mascot';

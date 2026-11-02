@@ -7,11 +7,16 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "noImplicitAny": true,
     "declaration": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "lib": ["ES2020"],
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@kotik-arithmetic/config": ["../config/src/index.ts"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

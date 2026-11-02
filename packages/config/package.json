@@ -2,6 +2,11 @@
   "name": "@kotik-arithmetic/config",
   "version": "1.0.0",
   "private": true,
-  "files": [],
-  "exports": {}
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./mascot": "./src/config/mascot.ts"
+  },
+  "files": ["src/**/*.ts"]
 }

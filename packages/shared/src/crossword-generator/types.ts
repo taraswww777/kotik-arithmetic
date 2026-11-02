@@ -52,3 +52,25 @@ export type GeneratorOptions = {
   difficultyLevel: Difficulty;
   operationSet: keyof typeof operationSets;
 };
+
+// Конфигурация маскота
+export interface MascotConfig {
+  // Состояние котика: sit (сидит), lie (лёг), stand (стоит)
+  position: 'sit' | 'lie' | 'stand';
+  
+  // Частота смены позы (мс)
+  positionChangeInterval: number;
+  
+  // Автоматически скрывать при фокусе на поле ввода
+  autoHideOnFocus: boolean;
+  
+  // Показать приветственное сообщение при старте
+  showWelcomeMessage: boolean;
+}
+
+export const defaultMascotConfig: MascotConfig = {
+  position: 'sit',
+  positionChangeInterval: 15000, // каждые 15 секунд
+  autoHideOnFocus: true,
+  showWelcomeMessage: true,
+};

@@ -18,6 +18,7 @@
     "baseUrl": "./",
     "paths": {
       "*": ["node_modules/*"],
+      "shared-config": ["../packages/shared/src/config/index.ts"],
       "shared-validation": ["../packages/shared/src/validation"]
     }
   },
