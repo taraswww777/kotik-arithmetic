@@ -8,14 +8,30 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(uuid())
+  userId         String?  @unique // Внутренний ID для интеграции с внешними системами (VK, MAX, ЕСИА)
+  externalId     String?  @unique // Внешний идентификатор (VK ID, MAX ID, ЕСИА ID)
+  
+  email          String   @unique
+  password       String
+  
+  role           UserRole  @default(USER_ROLE_CHILD) // enum: USER_ROLE_CHILD (ребёнок), USER_ROLE_PARENT (родитель)
+  organizerId    String?  // ID организатора группы (учителя/родителя), если пользователь является организатором
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   gameResults GameResult[]
   groups      Group[]
+  
+  @@index([email])
+  @@index([userId])
+  @@index([externalId])
+}
+
+enum UserRole {
+  USER_ROLE_CHILD
+  USER_ROLE_PARENT
 }
 
 model GameResult {
@@ -28,7 +44,7 @@ model GameResult {
   difficulty  String
   completedAt DateTime
   
-  user        User      @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
   
   @@index([userId])
   @@index([crosswordId])
@@ -40,7 +56,11 @@ model Group {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members GroupMember[]
+  members   GroupMember[]
+
+  organizer User?    // Организатор группы (учитель/родитель)
+  
+  @@index([organizerId])
 }
 
 model GroupMember {
@@ -49,9 +69,16 @@ model GroupMember {
   
   group      Group    @relation(fields: [groupId], references: [id])
   user       User     @relation(fields: [userId], references: [id])
-
+  
+  role       MemberRole @default(MEMBER_ROLE_MEMBER) // enum: MEMBER_ROLE_MEMBER, MEMBER_ROLE_ORGANIZER
+  
   @@id([groupId, userId])
   @@unique([groupId, userId])
+}
+
+enum MemberRole {
+  MEMBER_ROLE_MEMBER
+  MEMBER_ROLE_ORGANIZER
 }
 
 model Competition {
