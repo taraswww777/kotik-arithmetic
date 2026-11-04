@@ -15,6 +15,7 @@
 - Prisma ORM (PostgreSQL)
 - Zod валидация
 - Модульная архитектура
+- Группы и соревнования (архитектурный задел)
 
 ## Структура проекта:
 ```
@@ -50,9 +51,29 @@ npx prisma generate
 ```
 
 ## API Endpoints:
+
+### Аутентификация
 - `POST /auth/register` — Регистрация
 - `POST /auth/login` — Вход
+
+### Статистика
 - `GET /stats` — Статистика
+
+### Группы (архитектурный задел)
+- `POST /groups` — Создание группы
+- `GET /groups` — Список групп
+- `GET /groups/:id` — Получить группу по ID
+- `PUT /groups/:id` — Обновить группу
+- `DELETE /groups/:id` — Удалить группу
+
+### Соревнования (архитектурный задел)
+- `POST /competitions` — Создание соревнования
+- `GET /competitions` — Список соревнований
+- `GET /competitions/:id` — Получить соревнование по ID
+- `PUT /competitions/:id` — Обновить соревнование
+- `DELETE /competitions/:id` — Удалить соревнование
+- `POST /competitions/:id/entries` — Регистрация участника в соревновании
+- `GET /competitions/:id/entries` — Список участников соревнования
 
 ## Документация:
 - [DevOps Guide](./.tasks/02-техническая-архитектура/devops-guide.md)
@@ -60,11 +81,15 @@ npx prisma generate
 - [PostgreSQL Backup](./.tasks/02-техническая-архитектура/postgres-backup-guide.md)
 - [Prisma Migrations](./.tasks/02-техническая-архитектура/prisma-migrations.md)
 - [Nginx Config](./.tasks/02-техническая-архитектура/nginx-config-example.conf)
+- [API Групп и Соревнований](<apps/server/docs/groups-api.md>)
 
 ## Требования к системе:
 - Node.js >= 18.0.0
 - PostgreSQL >= 15
 - Docker (опционально)
+
+## Примечание:
+На первом релизе группы и соревнования могут отсутствовать в UI, но схема данных и API готовы к их использованию без переработки ядра.
 
 ## Лицензия:
 MIT License

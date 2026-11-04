@@ -1,3 +1,8 @@
+// Это схема базы данных для Kotik Arithmetic — кроссвордной арифметической игры
+// Версия: 1.0.0
+// Создано: 2026-11-04
+// Технологии: NestJS + Prisma ORM + PostgreSQL
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -7,6 +12,29 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+/// Роль пользователя: ребёнок (игрок) или родитель (учитель/опекающий)
+enum UserRole {
+  USER_ROLE_CHILD
+  USER_ROLE_PARENT
+}
+
+/// Роль члена группы: обычный участник или организатор
+enum MemberRole {
+  MEMBER_ROLE_MEMBER
+  MEMBER_ROLE_ORGANIZER
+}
+
+// ============================================================================
+// MODELS
+// ============================================================================
+
+/**
+ * Модель User — пользователи системы
+ */
 model User {
   id             String   @id @default(uuid())
   userId         String?  @unique // Внутренний ID для интеграции с внешними системами (VK, MAX, ЕСИА)
@@ -21,19 +49,21 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
+  // Relations
   gameResults GameResult[]
   groups      Group[]
-  
+  groupMembers GroupMember[]
+  competitionEntries CompetitionEntry[]
+
+  // Indexes for performance and lookups
   @@index([email])
   @@index([userId])
   @@index([externalId])
 }
 
-enum UserRole {
-  USER_ROLE_CHILD
-  USER_ROLE_PARENT
-}
-
+/**
+ * Модель GameResult — результаты игр (кроссвордов)
+ */
 model GameResult {
   id          String   @id @default(uuid())
   userId      String
@@ -46,23 +76,31 @@ model GameResult {
   
   user        User     @relation(fields: [userId], references: [id])
   
+  // Indexes for analytics and filtering
   @@index([userId])
   @@index([crosswordId])
 }
 
+/**
+ * Модель Group — объединения пользователей (класс, семья)
+ */
 model Group {
   id        String   @id @default(uuid())
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Relations
   members   GroupMember[]
-
   organizer User?    // Организатор группы (учитель/родитель)
   
+  // Index for organizer lookups
   @@index([organizerId])
 }
 
+/**
+ * Модель GroupMember — связь User ↔ Group (многие-ко-многим с ролью)
+ */
 model GroupMember {
   groupId    String
   userId     String
@@ -72,15 +110,14 @@ model GroupMember {
   
   role       MemberRole @default(MEMBER_ROLE_MEMBER) // enum: MEMBER_ROLE_MEMBER, MEMBER_ROLE_ORGANIZER
   
+  // Compound primary key and uniqueness constraint
   @@id([groupId, userId])
   @@unique([groupId, userId])
 }
 
-enum MemberRole {
-  MEMBER_ROLE_MEMBER
-  MEMBER_ROLE_ORGANIZER
-}
-
+/**
+ * Модель Competition — соревнования с заданными правилами сравнения
+ */
 model Competition {
   id          String   @id @default(uuid())
   name        String   @unique
@@ -88,12 +125,16 @@ model Competition {
   startDate   DateTime @default(now())
   endDate     DateTime?
   
+  // Relations
   entries     CompetitionEntry[]
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
+/**
+ * Модель CompetitionEntry — записи участников соревнований
+ */
 model CompetitionEntry {
   competitionId String
   userId        String
@@ -101,6 +142,7 @@ model CompetitionEntry {
   competition Competition @relation(fields: [competitionId], references: [id])
   user        User       @relation(fields: [userId], references: [id])
 
+  // Compound primary key and uniqueness constraint (user can join only once)
   @@id([competitionId, userId])
   @@unique([competitionId, userId])
 }

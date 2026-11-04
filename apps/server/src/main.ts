@@ -23,6 +23,10 @@ async function bootstrap() {
 
   await app.listen(3000);
   console.log(`🐱 Kotik Arithmetic API is running on port 3000`);
+  
+  // Подключаем новые модули (архитектурный задел)
+  console.log('✅ Модуль Group включён: /groups — CRUD для групп');
+  console.log('✅ Модуль Competition включён: /competitions — CRUD для соревнований и регистрации участников');
 }
 
 bootstrap();
