@@ -1,4 +1,4 @@
-import styled, { keyframes } from '@emotion/styled';
+import styled from '@emotion/styled';
 import { useState, useEffect, useCallback } from 'react';
 import { mascotMessages, type MascotMessage } from '@kotik-arithmetic/config/mascot';
 
@@ -7,30 +7,30 @@ type SuccessMessage = MascotMessage & { type: 'success' };
 type HintMessage = MascotMessage & { type: 'hint' };
 type ErrorMessage = MascotMessage & { type: 'error' };
 
-// Анимации
-const bounce = keyframes({
-  '0%, 100%': { transform: 'translateY(0)' },
-  '50%': { transform: 'translateY(-10px)' },
-});
+// Анимации через CSS-анимации
+const bounce = `@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}`;
 
-const sitAnimation = keyframes({
-  '0%': { transform: 'rotate(0deg)' },
-  '25%': { transform: 'rotate(5deg)' },
-  '75%': { transform: 'rotate(-5deg)' },
-  '100%': { transform: 'rotate(0deg)' },
-});
+const sitAnimation = `@keyframes sit {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}`;
 
-const lieAnimation = keyframes({
-  '0%': { transform: 'rotate(0deg) scaleX(1)' },
-  '50%': { transform: 'rotate(-5deg) scaleX(0.95)' },
-  '100%': { transform: 'rotate(0deg) scaleX(1)' },
-});
+const lieAnimation = `@keyframes lie {
+  0% { transform: rotate(0deg) scaleX(1); }
+  50% { transform: rotate(-5deg) scaleX(0.95); }
+  100% { transform: rotate(0deg) scaleX(1); }
+}`;
 
-const standAnimation = keyframes({
-  '0%': { transform: 'scaleY(1)' },
-  '50%': { transform: 'scaleY(1.05)' },
-  '100%': { transform: 'scaleY(1)' },
-});
+const standAnimation = `@keyframes stand {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(1.05); }
+  100% { transform: scaleY(1); }
+}`;
 
 // Кнопка скрытия/показа маскота
 const ToggleButton = styled.button({

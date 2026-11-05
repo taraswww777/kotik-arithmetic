@@ -1,0 +1,37 @@
+<!-- SVG placeholder для маскированных иконок Android -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <defs>
+    <linearGradient id="maskGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50"/>
+      <stop offset="100%" style="stop-color:#8BC34A"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Фон -->
+  <rect width="108" height="108" fill="url(#maskGradient)"/>
+  
+  <!-- Котик -->
+  <g transform="translate(26, 24)">
+    <!-- Голова кота -->
+    <circle cx="36" cy="32" r="14" fill="#fff"/>
+    
+    <!-- Глаза -->
+    <circle cx="30" cy="35" r="5" fill="#fff"/>
+    <circle cx="30" cy="37" r="4" fill="#333"/>
+    <circle cx="52" cy="35" r="5" fill="#fff"/>
+    <circle cx="52" cy="37" r="4" fill="#333"/>
+    
+    <!-- Нос -->
+    <polygon points="40,48 52,51 46,60 38,51" fill="#e74c3c"/>
+    
+    <!-- Рот -->
+    <path d="M 46 60 L 49 65 M 46 60 L 43 65" stroke="#e74c3c" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Знаки арифметики -->
+  <circle cx="94" cy="8" r="6" fill="#fff" opacity="0.9"/>
+  <text x="94" y="15" font-family="Arial, sans-serif" font-size="12" fill="#4CAF50" text-anchor="middle">+</text>
+  
+  <circle cx="14" cy="13" r="6" fill="#fff" opacity="0.9"/>
+  <text x="14" y="19" font-family="Arial, sans-serif" font-size="12" fill="#4CAF50" text-anchor="middle">×</text>
+</svg>

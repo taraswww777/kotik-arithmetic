@@ -1,0 +1,77 @@
+{
+  "project": "kotik-arithmetic",
+  "lastUpdated": "2026-11-04T00:00:00+03:00",
+  "executionOrder": [
+    {
+      "taskId": "00-01",
+      "taskName": "Локальное E2E тестирование",
+      "fileName": "tasks/00-тестирование-и-qa/00-01-local-e2e-testing.md",
+      "status": "pending",
+      "priority": 1,
+      "description": "Тестирование всех компонентов перед деплоем на VPS"
+    },
+    {
+      "taskId": "00-02",
+      "taskName": "Тест-кейсы",
+      "fileName": "tasks/00-тестирование-и-qa/00-02-test-cases.md",
+      "status": "completed",
+      "priority": 1,
+      "description": "Документация с тест-кейсами для покрытия функциональности"
+    },
+    {
+      "taskId": "09-01",
+      "taskName": "Подготовка RuStore карточки",
+      "fileName": "tasks/09-требования-ru-store.md",
+      "status": "pending",
+      "priority": 2,
+      "description": "Создание иконок, скриншотов, описания приложения"
+    },
+    {
+      "taskId": "09-02",
+      "taskName": "Политика конфиденциальности",
+      "fileName": "tasks/09-требования-ru-store.md",
+      "status": "pending",
+      "priority": 2,
+      "description": "Написание политики конфиденциальности для RuStore"
+    },
+    {
+      "taskId": "10-01",
+      "taskName": "Развёртывание на VPS",
+      "fileName": "tasks/10-деплой-и-инфраструктура.md",
+      "status": "pending",
+      "priority": 3,
+      "description": "Настройка сервера, HTTPS, PostgreSQL, PM2"
+    },
+    {
+      "taskId": "09-03",
+      "taskName": "Тестирование на устройствах Android",
+      "fileName": "tasks/09-требования-ru-store.md",
+      "status": "pending",
+      "priority": 2,
+      "description": "Финальное тестирование перед подачей в RuStore"
+    },
+    {
+      "taskId": "10-02",
+      "taskName": "Автоматические бэкапы БД",
+      "fileName": "tasks/10-деплой-и-инфраструктура.md",
+      "status": "pending",
+      "priority": 3,
+      "description": "Настройка cron + pg_dump для ежедневных бэкапов"
+    },
+    {
+      "taskId": "10-03",
+      "taskName": "Мониторинг и логирование",
+      "fileName": "tasks/10-деплой-и-инфраструктура.md",
+      "status": "pending",
+      "priority": 3,
+      "description": "PM2 logs + systemd journalctl для мониторинга"
+    }
+  ],
+  "summary": {
+    "totalTasks": 7,
+    "completedTasks": 1,
+    "pendingTasks": 6,
+    "nextTaskId": "00-01",
+    "nextTaskName": "Локальное E2E тестирование"
+  }
+}

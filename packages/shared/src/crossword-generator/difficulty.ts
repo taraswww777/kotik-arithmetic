@@ -1,0 +1,1 @@
+export const difficultyLevels = 4; // базовые уровни сложности: 1, 2, 3, 4

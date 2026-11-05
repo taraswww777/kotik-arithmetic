@@ -1,6 +1,36 @@
-import { createTheme, ThemeProvider } from '@emotion/react';
+// import { createTheme, ThemeProvider } from '@emotion/react';
 
-const theme = createTheme({
+interface ThemeConfig {
+  palette: {
+    primary: string;
+    primaryDark: string;
+    secondary: string;
+    error: string;
+    warning: string;
+    success: string;
+    background: {
+      default: string;
+      paper: string;
+    };
+    text: {
+      primary: string;
+      secondary: string;
+    };
+  };
+  typography: {
+    fontSize: number;
+    fontFamily: string;
+    html: { fontSize: string };
+    h1: { fontSize: string; fontWeight: string };
+    h2: { fontSize: string; fontWeight: string };
+    h3: { fontSize: string; fontWeight: string };
+    body1: { fontSize: string };
+    button: { fontSize: string; padding: string };
+  };
+  shadows: string[];
+}
+
+const themeConfig: ThemeConfig = {
   palette: {
     primary: '#4CAF50',
     primaryDark: '#45a049',
@@ -49,6 +79,6 @@ const theme = createTheme({
     '0 4px 8px rgba(0,0,0,0.1)',
     '0 8px 16px rgba(0,0,0,0.1)',
   ],
-});
+};
 
-export default theme;
+export default themeConfig;

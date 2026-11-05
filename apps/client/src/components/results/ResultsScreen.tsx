@@ -1,5 +1,14 @@
 import styled from '@emotion/styled';
 
+// Тип статистики игры
+export interface GameStats {
+  solvedCount: number;
+  totalSolved: number;
+  timeSpent: number;
+  mistakes: number;
+  difficultyLevel: 'basic' | 'advanced';
+}
+
 const Container = styled.div(({ inverted }) => ({
   position: 'absolute' as const,
   top: '0',
@@ -138,40 +147,26 @@ export const ResultsScreen = ({
           </StatCard>
         )}
         
-        <StatCard icon="📊">
-          <Label>Уровень</Label>
-          <Value>{displayDifficulty}</Value>
-        </StatCard>
       </StatsGrid>
-      
-      <ActionButtons inverted={inverted}>
-        <Button 
-          primary 
-          onClick={handleStartNewGame}
-          style={{ backgroundColor: '#4CAF50', color: 'white' }}
-        >
-          Новый кроссворд 🔄
-        </Button>
-        
-        {solvedCount > 0 && (
-          <Button 
-            primary={false}
-            onClick={handleSaveToHistory}
-            style={{ backgroundColor: '#2196F3', color: 'white' }}
-          >
-            Сохранить в историю 💾
+
+      {/* Кнопка "Продолжить игру" */}
+      {solvedCount === totalSolved && (
+        <div style={{ marginTop: '24px' }}>
+          <Button onClick={handleStartNewGame}>
+            🎮 Продолжить новую игру
+          </Button>
+        </div>
+      )}
+
+      {/* Кнопки сохранения */}
+      <ActionButtons>
+        {onSaveResult && (
+          <Button primary inverted={inverted} onClick={handleSaveToHistory}>
+            💾 Сохранить результат
           </Button>
         )}
       </ActionButtons>
+
     </Container>
   );
 };
-
-// Типы для экспорта
-export interface GameStats {
-  solvedCount: number;
-  totalSolved: number;
-  timeSpent: number;
-  mistakes: number;
-  difficultyLevel: 'basic' | 'advanced';
-}

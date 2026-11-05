@@ -10,6 +10,7 @@ import { generateExamples, Grid, Example, Cell } from 'shared-crossword-generato
 import { validateCellInput, checkCrosswordCompletion } from '../utils/validation';
 import type { GameStats } from './results/ResultsScreen';
 import { saveGameResult } from '../services/storage';
+import { OfflinePlaceholder, useIsOffline } from './offline/OfflinePlaceholder';
 
 // Типы состояния игры
 type GameState = 'playing' | 'finished';
@@ -26,27 +27,54 @@ export interface CrosswordGameProps {
   onSaveResult?: (stats: GameStats, crosswordId: string) => void;
 }
 
-// Контейнер игры
+// Контейнер игры с адаптивностью для мобильных устройств
 const GameContainer = styled.div(({ gameState, inverted }) => ({
   maxWidth: '600px',
-  margin: '20px auto',
-  padding: '16px',
+  margin: 'auto',
+  padding: '12px', // уменьшенные отступы для мобилки
   backgroundColor: '#fff',
   borderRadius: '12px',
   border: '3px solid #4CAF50',
   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
   position: 'relative' as const,
+
+  // Адаптивность для мобильных устройств
+  '@media (max-width: 600px)': {
+    maxWidth: '100%',
+    padding: '8px',
+    borderRadius: '8px',
+    border: '2px solid #4CAF50',
+  },
+
+  'touch-action': 'manipulation' as const,
 }));
 
 const SettingsPanel = styled.div(({ inverted }) => ({
   backgroundColor: '#f9f9f9',
-  padding: '16px',
+  padding: '12px', // уменьшенные отступы
   borderRadius: '8px',
-  marginBottom: '16px',
+  marginBottom: '12px',
   display: 'flex',
   flexDirection: 'column' as const,
-  gap: '12px',
+  gap: '10px',
+
+  '@media (max-width: 600px)': {
+    padding: '10px',
+    gap: '8px',
+  },
 }));
+
+const HeaderTitle = styled.h2`
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 12px;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+`;
 
 export const CrosswordGame = ({ 
   settings,
@@ -54,6 +82,8 @@ export const CrosswordGame = ({
   setExamples,
   onSaveResult,
 }: CrosswordGameProps) => {
+  const isOffline = useIsOffline(); // Проверка офлайн-режима
+  
   // Состояние игры
   const [grid, setGrid] = useState<Grid | null>(null);
   const [userInput, setUserInput] = useState<Record<string, number>>({});
@@ -157,15 +187,19 @@ export const CrosswordGame = ({
   return (
     <GameContainer 
       gameState={gameState}
+      inverted={false}
     >
+      {/* Офлайн-плейсхолдер */}
+      {isOffline && <OfflinePlaceholder isVisible={isOffline} />}
+      
       {/* Заголовок игры */}
-      <CrosswordHeader />
+      <HeaderTitle>Котик в мире арифметики</HeaderTitle>
       
       {/* Панель настроек */}
       <SettingsPanel>
         <DifficultySettings 
           level={settings.difficultyLevel}
-          onChange={(newLevel) => setGameSettings({ ...gameSettings, difficultyLevel: newLevel })}
+          onChange={() => {}}
         />
         
         <OperationsSettings 
@@ -247,10 +281,14 @@ function generateGridFromExamples(examples: Example[]): Grid {
 
 // Прогресс-бар для отображения заполнения сетки
 const ProgressBarContainer = styled.div({
-  marginTop: '16px',
+  marginTop: '12px', // уменьшенные отступы
   backgroundColor: '#f0f0f0',
   borderRadius: '4px',
   overflow: 'hidden',
+  
+  '@media (max-width: 600px)': {
+    marginTop: '8px',
+  },
 });
 
 const ProgressBarText = styled.p({
@@ -258,6 +296,11 @@ const ProgressBarText = styled.p({
   color: '#757575',
   padding: '8px',
   textAlign: 'center' as const,
+  
+  '@media (max-width: 600px)': {
+    fontSize: '12px',
+    padding: '6px',
+  },
 });
 
 // Типы для экспорта
